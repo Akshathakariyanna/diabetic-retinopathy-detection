@@ -3,8 +3,12 @@ import gradio as gr
 from src.model import DRModel
 from torchvision import transforms as T
 
-CHECKPOINT_PATH = "artifacts/checkpoints/run-2026-04-06-02-11-20/epoch=25-step=1794-val_loss=1.20-val_acc=0.49-val_kappa=0.32.ckpt"
-model = DRModel.load_from_checkpoint(CHECKPOINT_PATH, map_location="cpu")
+CHECKPOINT_PATH = r"C:\Users\Akshatha K\Desktop\diabetic-retinopathy-detection-main\artifacts\checkpoints\run-2026-04-06-02-11-20\epoch=25-step=1794-val_loss=1.20-val_acc=0.49-val_kappa=0.32.ckpt"
+model = DRModel.load_from_checkpoint(
+    CHECKPOINT_PATH,
+    map_location="cpu",
+    strict=False
+)
 model.eval()
 
 labels = {
@@ -43,13 +47,13 @@ dr_app = gr.Interface(
         This app utilizes deep learning models to detect diabetic retinopathy in retinal images.\
         Diabetic retinopathy is a common complication of diabetes and early detection is crucial for effective treatment.",
     examples=[
-        "data/diabetic-retinopathy-dataset/sample/10_left.jpeg",
-        "data/diabetic-retinopathy-dataset/sample/10_right.jpeg",
-        "data/diabetic-retinopathy-dataset/sample/15_left.jpeg",
-        "data/diabetic-retinopathy-dataset/sample/16_right.jpeg",
+        "data/sample/10_left.jpeg",
+        "data/sample/10_right.jpeg",
+        "data/sample/15_left.jpeg",
+        "data/sample/16_right.jpeg",
     ],
 )
 
 # Run the Gradio app
 if __name__ == "__main__":
-    dr_app.launch()
+    dr_app.launch(share=True)
